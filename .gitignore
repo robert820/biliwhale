@@ -1,0 +1,33 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor and IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+coverage/
+*.log
+*.tmp
+*.bak
+*.zip
+*.crx
+
+# Unused icon variants and design candidates
+assets/dafeiyu-icon/
