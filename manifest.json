@@ -1,0 +1,66 @@
+{
+  "manifest_version": 3,
+  "name": "BiliWhale",
+  "version": "1.0.0",
+  "description": "Bilibili 影片下載、字幕與彈幕匯出、原圖下載及首頁推薦歷史；支援 Aria2/Motrix RPC 與瀏覽器 MP4 合併。",
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "action": {
+    "default_title": "BiliWhale",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "32": "assets/icon32.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "downloads",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://localhost:*/*",
+    "http://127.0.0.1:*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.bilibili.com/*",
+        "https://*.bilibili.com/*"
+      ],
+      "js": [
+        "content-seed.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "content.js",
+        "ffmpeg-core.js",
+        "ffmpeg-core.wasm",
+        "ffmpeg-core.worker.js",
+        "ffmpeg.worker.js"
+      ],
+      "matches": [
+        "http://*.bilibili.com/*",
+        "https://*.bilibili.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiliWhale</title>
+  <style>
+    :root {
+      --primary: #00aeec;
+      --pink: #fb7299;
+      --bg: #ffffff;
+      --card-bg: #f6f7f9;
+      --text: #18191c;
+      --subtext: #61666d;
+    }
+    body {
+      width: 330px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e3e5e7;
+    }
+    .header img {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header-text h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .header-text p {
+      margin: 2px 0 0;
+      font-size: 11px;
+      color: var(--subtext);
+    }
+
+    .section {
+      margin-top: 14px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .section-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--subtext);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #ffebee;
+      color: #c62828;
+    }
+    .status-badge.connected {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .status-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    .form-label {
+      font-size: 12px;
+      color: var(--text);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .form-control {
+      padding: 6px 10px;
+      border: 1px solid #ccd0d7;
+      border-radius: 6px;
+      font-size: 12px;
+      outline: none;
+      transition: border 0.2s;
+      background: #fff;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .endpoint-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn {
+      padding: 6px 12px;
+      text-align: center;
+      border: 1px solid #ccd0d7;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      font-weight: 500;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .btn.primary:hover {
+      background: #0099e6;
+    }
+
+    .pending-row {
+      padding: 6px 0;
+      border-top: 1px solid #e3e5e7;
+    }
+    .pending-label {
+      font-size: 11px;
+      word-break: break-all;
+      margin-bottom: 4px;
+    }
+    .pending-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tips-box {
+      margin-top: 14px;
+      padding: 10px;
+      border-radius: 6px;
+      background: #e1f5fe;
+      color: #0277bd;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .tips-box strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="assets/icon48.png" alt="logo" />
+    <div class="header-text">
+      <h3 id="txt-title">BiliWhale</h3>
+      <p id="txt-sub">Aria2 RPC · 瀏覽器原生下載</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <span id="txt-rpc-title">Aria2 RPC 介面</span>
+      <span class="status-badge" id="rpc-status">
+        <span class="dot"></span>
+        <span id="status-text">檢測中</span>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" id="txt-endpoint">RPC 介面 (獨立通訊埠輸入)</label>
+      <div class="endpoint-row">
+        <input type="text" id="rpc-host" class="form-control" style="flex: 2; width: 120px;" value="http://localhost" placeholder="http://localhost" />
+        <span style="font-weight: bold; color: #61666d;">:</span>
+        <input type="number" id="rpc-port" class="form-control" style="width: 70px; text-align: center; font-weight: 600;" value="16800" placeholder="16800" />
+        <button class="btn primary" id="btn-test">測試</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" id="txt-dir">儲存目錄</label>
+      <input type="text" id="rpc-dir" class="form-control" style="width: 100%;" value="" placeholder="預設 C:\Downloads\Video" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" id="txt-token">RPC 密鑰</label>
+      <input type="password" id="rpc-token" class="form-control" style="width: 100%;" placeholder="選填 (無密碼留空)" />
+    </div>
+  </div>
+
+  <div class="section" id="pending-box" style="display: none;">
+    <div class="section-title"><span id="txt-pending"></span></div>
+    <div id="pending-list"></div>
+  </div>
+
+  <div class="tips-box" id="txt-tips">
+    <strong>💡 使用提示</strong>
+    1. 打開任何 B 站視頻或番劇頁面；<br>
+    2. 點擊右下角「BiliWhale」展開面板；<br>
+    3. 支援一鍵推送至 RPC 下載器或直接保存到瀏覽器下載！
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
